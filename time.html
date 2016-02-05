@@ -26,10 +26,33 @@
 
 			.list-group-item{
 				position: relative;
-				cursor: move;
 			}
 
 			.list-group-item:after{
+				
+			}
+
+			.list-group-item input{
+				display: none;
+			}
+
+			.list-group-item.hours{
+				border-left: 5px solid rgba(105, 180, 199, 1);
+			}
+
+			.list-group-item.hours input.hours-input{
+				display: inline;
+			}
+
+			.list-group-item.sortable{
+				cursor: move;
+			}
+
+			.list-group-item.choose input.chosen{
+				display: inline;
+			}
+
+			.list-group-item.sortable:after{
 				content:"\f142";
 				font-family: FontAwesome;
 				position: absolute;
@@ -39,31 +62,11 @@
 
 			}
 
-			.list-group-item input{
-				display: none;
-			}
-
-			.list-group-item.input{
-				border-left: 5px solid rgba(105, 180, 199, 1);
-			}
-
-			.list-group-item.input input{
-				display: inline;
-			}
-
-			.list-group-item.fixed{
-				cursor: default;
-			}
-
-			.list-group-item.fixed:after{
-				content: "";
-			}
-
 			#hours-left-summary{
 				display: none;
 			}
 
-			.hours-input{
+			.hours-input, .chosen{
 				float:right;
 			}
 
@@ -72,53 +75,79 @@
 				color: #fff;
 				opacity: 0.5;
 			}
+
+			#unchosen{
+				display: none;
+				padding-left: 0;
+			}
+
+			#unchosen li{
+				border-left: 5px solid #ed7070;
+			}
 		</style>
 	</head>
 
 	<body>
 		<section class="wrapper">
-			<h3 id="title">Prioritize these:</h3>
+			<h3 id="title">Select 5 activities that are important this week:</h3>
 			<h4 id="hours-left-summary">Hours remaining to assign: <span id="hours-left"></span> </h4>
 			<!-- Simple List -->
 			<ul id="simpleList" class="list-group">
-			    <li class="list-group-item">My Side Business <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Time with my kids <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Time with my spouse <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Housework <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Workout <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Time with Friends  <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Grocery Shopping <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Running Errands <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Spiritual Growth <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Personal Development <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item">Herding Cats <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">My Side Business <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Time with my kids <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Time with my spouse <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Housework <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Workout <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Time with Friends  <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Grocery Shopping <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Running Errands <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Spiritual Growth <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Personal Development <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">Herding Cats <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			</ul>
+
+			<ul id="unchosen">
 			</ul>
 
 			<button class="next">Next</button>
 		</section>
 
 		<script>
+			var CHOOSE_ACTIVITIES = 1;
+			var PRIORITIZE_ACTIVITIES = 2;
+			var ASSIGN_HOURS = 3;
+			var DISPLAY_RESULTS = 4;
+
 			var list;
 			var hours = 20;
+			var step = CHOOSE_ACTIVITIES;
 
+			function filterList(){
+			    //$('.list-group-item').hide();
+			    $(".chosen").each(function() {
+			        //console.log($(this).parent());
+			        if (!$(this).is(':checked')){
+			        	$('#unchosen').append($(this).parent());
+			        }
+			    });
+			}
 			function enableList(){
 		    	// Simple list
 		    	list = Sortable.create(simpleList, { ghostClass: "ghost" });
-		    	$('.list-group-item').removeClass('fixed');
+		    	$('.list-group-item').addClass('sortable');
 			}
 			function disableList(){
 				list.destroy();
-				$('.list-group-item').addClass('fixed');
+				$('.list-group-item').removeClass('sortable');
 			}
 			function showHours(){
-				$('.list-group-item').each(function (index, value) { 
-				  $(this).addClass('input');
-				  return index<4;
+				$('#simpleList .list-group-item').each(function (index, value) { 
+				  $(this).addClass('hours');
 				});
 			}
 			function updateHours(){
 				var hoursLeft = hours;
-				$('.list-group-item input').each(function (index, value) { 
+				$('.list-group-item .hours-input').each(function (index, value) { 
 				  hoursLeft = hoursLeft - $(this).val();
 				});
 				console.log(hoursLeft);
@@ -126,14 +155,36 @@
 				$('#hours-left').html(hoursLeft);
 			}
 
-			enableList();
-
 			$('.next').on('click', function(){
-				$('#title').html('Assign Hours');
-				$('#hours-left-summary').show();
-				disableList();
-				showHours();
-				updateHours();
+				switch(step) {
+				    case CHOOSE_ACTIVITIES:
+				    	$('#title').html('Prioritize them');
+				    	$('.list-group-item').removeClass('choose');
+				    	filterList();
+				    	enableList();
+				        step = PRIORITIZE_ACTIVITIES;
+				        break;
+				    case PRIORITIZE_ACTIVITIES:
+				        $('#title').html('Assign Hours');
+						$('#hours-left-summary').show();
+						disableList();
+						showHours();
+						updateHours();
+						step = ASSIGN_HOURS;
+				        break;
+				    case ASSIGN_HOURS:
+				    	$('#title').html('Your Plan');
+				    	$('#hours-left-summary').hide();
+				    	$('#unchosen').show();
+				    	$('.next').hide();
+				    	step = DISPLAY_RESULTS;
+				    	break;
+				    case DISPLAY_RESULTS:
+				    	break;
+				    default:
+				        break;
+				}
+				
 			});
 
 			$('.hours-input').on('change', function(){
