@@ -1,0 +1,147 @@
+<html>
+	<head>
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js" crossorigin="anonymous"></script>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<!-- CDNJS :: Sortable (https://cdnjs.com/) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js"></script>
+
+		<!-- FontAwesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+		<style>
+			.wrapper{
+				width: 500px;
+				margin: 20px auto;
+			}
+
+			.list-group-item{
+				position: relative;
+				cursor: move;
+			}
+
+			.list-group-item:after{
+				content:"\f142";
+				font-family: FontAwesome;
+				position: absolute;
+				right: 9px;
+			    top: 8px;
+			    font-size: 1.3em;
+
+			}
+
+			.list-group-item input{
+				display: none;
+			}
+
+			.list-group-item.input{
+				border-left: 5px solid rgba(105, 180, 199, 1);
+			}
+
+			.list-group-item.input input{
+				display: inline;
+			}
+
+			.list-group-item.fixed{
+				cursor: default;
+			}
+
+			.list-group-item.fixed:after{
+				content: "";
+			}
+
+			#hours-left-summary{
+				display: none;
+			}
+
+			.hours-input{
+				float:right;
+			}
+
+			.ghost{
+				background-color: #69b4c7;
+				color: #fff;
+				opacity: 0.5;
+			}
+		</style>
+	</head>
+
+	<body>
+		<section class="wrapper">
+			<h3 id="title">Prioritize these:</h3>
+			<h4 id="hours-left-summary">Hours remaining to assign: <span id="hours-left"></span> </h4>
+			<!-- Simple List -->
+			<ul id="simpleList" class="list-group">
+			    <li class="list-group-item">My Side Business <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Time with my kids <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Time with my spouse <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Housework <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Workout <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Time with Friends  <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Grocery Shopping <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Running Errands <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Spiritual Growth <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Personal Development <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item">Herding Cats <input class="hours-input" type="text"/></li>
+			</ul>
+
+			<button class="next">Next</button>
+		</section>
+
+		<script>
+			var list;
+			var hours = 20;
+
+			function enableList(){
+		    	// Simple list
+		    	list = Sortable.create(simpleList, { ghostClass: "ghost" });
+		    	$('.list-group-item').removeClass('fixed');
+			}
+			function disableList(){
+				list.destroy();
+				$('.list-group-item').addClass('fixed');
+			}
+			function showHours(){
+				$('.list-group-item').each(function (index, value) { 
+				  $(this).addClass('input');
+				  return index<4;
+				});
+			}
+			function updateHours(){
+				var hoursLeft = hours;
+				$('.list-group-item input').each(function (index, value) { 
+				  hoursLeft = hoursLeft - $(this).val();
+				});
+				console.log(hoursLeft);
+
+				$('#hours-left').html(hoursLeft);
+			}
+
+			enableList();
+
+			$('.next').on('click', function(){
+				$('#title').html('Assign Hours');
+				$('#hours-left-summary').show();
+				disableList();
+				showHours();
+				updateHours();
+			});
+
+			$('.hours-input').on('change', function(){
+				updateHours();
+			});
+		</script>
+
+	</body>
+
+
+</html>
