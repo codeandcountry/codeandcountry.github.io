@@ -26,10 +26,15 @@
 
 			.list-group-item{
 				position: relative;
+				padding: 0;
 			}
 
-			.list-group-item:after{
-				
+			.list-group-item label{
+				display: block;
+				padding: 10px 15px;
+				font-weight: normal;
+				margin-bottom: 0;
+				cursor: pointer;
 			}
 
 			.list-group-item input{
@@ -42,9 +47,11 @@
 
 			.list-group-item.hours input.hours-input{
 				display: inline;
+				margin-top: -3px;
+    			width: 40px;
 			}
 
-			.list-group-item.sortable{
+			.list-group-item.sortable label{
 				cursor: move;
 			}
 
@@ -84,6 +91,11 @@
 			#unchosen li{
 				border-left: 5px solid #ed7070;
 			}
+			
+			input[readonly]{
+				border: none;
+				text-align: right;
+			}
 		</style>
 	</head>
 
@@ -93,17 +105,61 @@
 			<h4 id="hours-left-summary">Hours remaining to assign: <span id="hours-left"></span> </h4>
 			<!-- Simple List -->
 			<ul id="simpleList" class="list-group">
-			    <li class="list-group-item choose">My Side Business <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Time with my kids <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Time with my spouse <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Housework <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Workout <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Time with Friends  <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Grocery Shopping <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Running Errands <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Spiritual Growth <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Personal Development <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
-			    <li class="list-group-item choose">Herding Cats <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/></li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	My Side Business <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Time with my kids <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Time with my spouse <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Housework <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Workout <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Time with Friends  <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Grocery Shopping <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Running Errands <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Spiritual Growth <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Personal Development <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
+			    <li class="list-group-item choose">
+			    	<label>
+			    	Herding Cats <input type="checkbox" class="chosen"/> <input class="hours-input" type="text"/>
+			    	</label>
+			    </li>
 			</ul>
 
 			<ul id="unchosen">
@@ -127,7 +183,7 @@
 			    $(".chosen").each(function() {
 			        //console.log($(this).parent());
 			        if (!$(this).is(':checked')){
-			        	$('#unchosen').append($(this).parent());
+			        	$('#unchosen').append($(this).parent().parent());
 			        }
 			    });
 			}
@@ -175,6 +231,7 @@
 				    case ASSIGN_HOURS:
 				    	$('#title').html('Your Plan');
 				    	$('#hours-left-summary').hide();
+				    	$('.hours-input').prop('readonly', true);
 				    	$('#unchosen').show();
 				    	$('.next').hide();
 				    	step = DISPLAY_RESULTS;
