@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<!-- jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js" crossorigin="anonymous"></script>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<!-- jQueryUI -->
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+		<!-- FontAwesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+		<!-- time -->
+		<script src="assets/js/time.js"></script>
+
+		<style>
+  			.resizable { 
+  				width: 150px; height: 50px; padding: 0.5em; 
+  				background: rgba(105, 180, 199, 1);
+  				color: #fff;
+  				margin-bottom: 20px;
+  				float: left;
+  			}
+  			.resizable h3 { text-align: center; margin: 0; }
+
+  			.ui-icon, .ui-widget-content .ui-icon{
+  				background: none;
+  			}
+
+  			.allocation-value{
+  				display:block;
+  				float:left;
+  				margin-left: 20px;
+  			}
+
+  			.allocation-wrapper{
+  				clear: both;
+  			}
+
+  			#remaining{
+  				font-size: 50px
+  			}
+
+  			.next{
+  				display: block;
+  				clear: both;
+  			}
+
+  		</style>
+	</head>
+
+	<body>
+		<section class="wrapper">
+			<h2>Time remaining to budget</h2>
+			<span id="remaining">0</span>
+			<div id="graph-wrapper"></div>
+			
+			<button class="next">Next</button>
+		</section>
+
+	</body>
+
+
+</html>
