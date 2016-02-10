@@ -7,7 +7,7 @@
   tool.defaultsOptions = {
     hours: 168,
     graphWrapper: '#graph-wrapper',
-    barWidthMultiplier: 10
+    barWidthMultiplier: 20
   };
 
   tool.defaultAllocations = {
@@ -15,7 +15,11 @@
     work: 63,
     housework: 5,
     meals: 7,
-    morning: 4
+    morning: 4,
+    kids: 1,
+    spouse: 1,
+    'side business': 1,
+    'social time': 1
   }
 
   tool.options = {};
@@ -66,7 +70,7 @@
     $( ".resizable" ).resizable(
       {
         handles: 'e, w',
-        grid: [10,10]
+        grid: [tool.options.barWidthMultiplier, tool.options.barWidthMultiplier]
       });
 
     $( ".resizable" ).on( "resize", function( event, ui ) {
