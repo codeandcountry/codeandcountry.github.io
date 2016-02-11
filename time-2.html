@@ -24,13 +24,13 @@
 
 		<style>
   			.resizable { 
-  				width: 150px; height: 50px; padding: 0.5em; 
+  				width: 150px; height: 35px; padding: 0.5em; 
   				background: rgba(105, 180, 199, 1);
   				color: #fff;
-  				margin-bottom: 20px;
+  				margin-bottom: 10px;
   				float: left;
   			}
-  			.resizable h3 { text-align: center; margin: 0; }
+  			.resizable h3 { text-align: center; margin: 0; font-size: 1.2em; }
 
   			.ui-icon, .ui-widget-content .ui-icon{
   				background: none;
@@ -56,6 +56,10 @@
   				margin-bottom: 20px;
   			}
 
+  			.add-new{
+  				clear: both;
+  			}
+
   		</style>
 	</head>
 
@@ -65,10 +69,17 @@
 			<span id="remaining">0</span>
 			<div class="controls">
 				<button type="button" class="btn btn-primary" id="sleep-toggle">Show/Hide Sleep</button>
-				<button itype="button" class="btn btn-primary" id="work-toggle">Show/Hide Work</button>
+				<button type="button" class="btn btn-primary" id="work-toggle">Show/Hide Work</button>
 			</div>
 
 			<div id="graph-wrapper"></div>
+
+			<div class="add-new">
+				<h4>Add new activity</h4>
+				<input type="text" id="add-name" placeholder="activity name"/>
+				<input type="text" id="add-hours" placeholder="# of hours"/>
+				<button type="button" class="btn btn-primary" id="add-item">add it</button>
+			</div>
 		</section>
 
 	</body>

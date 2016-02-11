@@ -128,6 +128,12 @@
     tool.drawBars();
   }
 
+  tool.addAllocation = function(name, hours){
+    tool.allocations[name] = hours;
+    tool.updateTotal();
+    tool.drawBars();
+  }
+
 }( window.bb = window.bb || {}, jQuery ));
 
 $(document).ready(function(){
@@ -139,5 +145,16 @@ $(document).ready(function(){
     });
     $('#sleep-toggle').on('click', function(){
       bb.tool.showSleep(!bb.tool.options.showSleep);
+    });
+
+    $('#add-item').on('click', function(){
+      var name = $('#add-name').val();
+      var hours = $('#add-hours').val();
+
+      if(name != '' && hours != '' && /^\d+$/.test(hours)){
+        bb.tool.addAllocation($('#add-name').val(), parseInt($('#add-hours').val(), 10));
+        $('#add-name').val('');
+        $('#add-hours').val('');
+      }
     });
 });
