@@ -32,6 +32,7 @@
     options = tool.options = tool.loadOptions(options);
     allocations = tool.allocations = tool.loadAllocations(allocations);
 
+    tool.autoScale();
     tool.drawBars();
     tool.updateTotal();
   };
