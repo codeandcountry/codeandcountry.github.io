@@ -115,6 +115,14 @@
     });
     var remaining = tool.options.hours - used;
     $('#remaining').html(remaining);
+
+    if(remaining < 0){
+      $(tool.options.graphWrapper).addClass('overbudget').removeClass('zero');
+    }else if(remaining == 0){
+      $(tool.options.graphWrapper).removeClass('overbudget').addClass('zero');
+    }else{
+      $(tool.options.graphWrapper).removeClass('overbudget').removeClass('zero');
+    }
   }
 
   tool.showWork = function(show){
