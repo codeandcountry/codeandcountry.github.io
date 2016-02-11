@@ -50,9 +50,10 @@
   				font-size: 50px
   			}
 
-  			.next{
+  			.controls{
   				display: block;
   				clear: both;
+  				margin-bottom: 20px;
   			}
 
   		</style>
@@ -62,9 +63,12 @@
 		<section class="wrapper">
 			<h2>Time remaining to budget</h2>
 			<span id="remaining">0</span>
+			<div class="controls">
+				<button type="button" class="btn btn-primary" id="sleep-toggle">Show/Hide Sleep</button>
+				<button itype="button" class="btn btn-primary" id="work-toggle">Show/Hide Work</button>
+			</div>
+
 			<div id="graph-wrapper"></div>
-			
-			<button class="next">Next</button>
 		</section>
 
 	</body>

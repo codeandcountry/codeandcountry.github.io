@@ -7,7 +7,9 @@
   tool.defaultsOptions = {
     hours: 168,
     graphWrapper: '#graph-wrapper',
-    barWidthMultiplier: 20
+    barWidthMultiplier: 20,
+    showSleep: true,
+    showWork: true
   };
 
   tool.defaultAllocations = {
@@ -15,7 +17,7 @@
     work: 63,
     housework: 5,
     meals: 7,
-    morning: 4,
+    'morning routine': 4,
     kids: 1,
     spouse: 1,
     'side business': 1,
@@ -43,20 +45,23 @@
   };
 
   tool.drawBars = function(){
+    $(tool.options.graphWrapper).html('');
     $.each(tool.allocations, function(k,v){
-      console.log(k+" : "+v);
+      if( tool.isAllocationVisible(k) ){
+        console.log(k+" : "+v);
 
-      $(tool.options.graphWrapper).append(
-        $('<div>', {
-          class: 'allocation-wrapper',
-          html: $('<div>', {
-                  class: 'resizable', 
-                  style: 'width:' + tool.getBarWidth(k),
-                  html: $('<h3>', { html: k}),
-                  'data-key': k
-                  })
-          }).append($('<span>', {class: 'allocation-value', html: v, 'data-key': k}))
+        $(tool.options.graphWrapper).append(
+          $('<div>', {
+            class: 'allocation-wrapper',
+            html: $('<div>', {
+                    class: 'resizable', 
+                    style: 'width:' + tool.getBarWidth(k),
+                    html: $('<h3>', { html: k}),
+                    'data-key': k
+                    })
+            }).append($('<span>', {class: 'allocation-value', html: v, 'data-key': k}))
         );
+      }
     });
 
     tool.initResizable();
@@ -64,6 +69,22 @@
 
   tool.getBarWidth = function(allocation){
     return (tool.allocations[allocation] * tool.options.barWidthMultiplier) + 'px';
+  }
+
+  tool.isAllocationVisible = function(allocation){
+    return ( (allocation != 'sleep' && allocation != 'work') || (allocation == 'sleep' && tool.options.showSleep) || (allocation == 'work' && tool.options.showWork));
+  }
+
+  tool.autoScale = function(){
+    var maxWidth = $(tool.options.graphWrapper).innerWidth();
+    var maxAllocation = 0;
+    $.each(tool.allocations, function(k,v){
+      if(tool.isAllocationVisible(k)){
+        maxAllocation = v > maxAllocation ? v : maxAllocation;
+      }
+    });
+
+    tool.options.barWidthMultiplier = (maxWidth / 2) / maxAllocation;
   }
 
   tool.initResizable = function(){
@@ -95,8 +116,28 @@
     $('#remaining').html(remaining);
   }
 
+  tool.showWork = function(show){
+    tool.options.showWork = show;
+    tool.autoScale();
+    tool.drawBars();
+  }
+
+  tool.showSleep = function(show){
+    tool.options.showSleep = show;
+    tool.autoScale();
+    tool.drawBars();
+  }
+
 }( window.bb = window.bb || {}, jQuery ));
 
 $(document).ready(function(){
+    //bb.tool.init({}, {showSleep: false, showWork: false, barWidthMultiplier: 50});
     bb.tool.init();
+
+    $('#work-toggle').on('click', function(){
+      bb.tool.showWork(!bb.tool.options.showWork);
+    });
+    $('#sleep-toggle').on('click', function(){
+      bb.tool.showSleep(!bb.tool.options.showSleep);
+    });
 });
