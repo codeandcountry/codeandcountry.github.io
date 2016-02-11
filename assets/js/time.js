@@ -54,13 +54,15 @@
         $(tool.options.graphWrapper).append(
           $('<div>', {
             class: 'allocation-wrapper',
-            html: $('<div>', {
+            html: $('<h4>', { html: k, class:'allocation-name'})
+            })
+            .append($('<div>', {
                     class: 'resizable', 
                     style: 'width:' + tool.getBarWidth(k),
-                    html: $('<h3>', { html: k}),
                     'data-key': k
-                    })
-            }).append($('<span>', {class: 'allocation-value', html: v, 'data-key': k}))
+                    }))
+            .append($('<div>', {class: 'allocation-value', html: v, 'data-key': k}))
+            
         );
       }
     });
@@ -103,7 +105,7 @@
   tool.setAllocation = function(k, width){
     var allocation = Math.floor(width / tool.options.barWidthMultiplier);
     tool.allocations[k] = allocation;
-    $("span[data-key='"+k+"']").html(allocation);
+    $("div.allocation-value[data-key='"+k+"']").html(allocation);
 
     tool.updateTotal();
   }
@@ -146,8 +148,8 @@
 }( window.bb = window.bb || {}, jQuery ));
 
 $(document).ready(function(){
-    //bb.tool.init({}, {showSleep: false, showWork: false, barWidthMultiplier: 50});
-    bb.tool.init();
+    bb.tool.init({}, {showSleep: false, showWork: false, barWidthMultiplier: 50});
+    //bb.tool.init();
 
     $('#work-toggle').on('click', function(){
       bb.tool.showWork(!bb.tool.options.showWork);

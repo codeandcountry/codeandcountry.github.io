@@ -23,9 +23,27 @@
 		<script src="assets/js/time.js"></script>
 
 		<style>
+			.colors{
+				//#6E7386 - light grey
+				//#585E6C - dark grey
+
+			}
+
+			.remaining-wrapper{
+				background-color: #03C5BC;
+				color: #fff;
+				padding: 1em;
+			}
+
+			.remaining-title{
+				text-align: center;
+				font-size: 1em;
+				margin-top: 0;
+			}
   			.resizable { 
   				width: 150px; height: 35px; padding: 0.5em; 
-  				background: rgba(105, 180, 199, 1);
+  				//background: rgba(105, 180, 199, 1);
+  				background: #585E6C;
   				color: #fff;
   				margin-bottom: 10px;
   				float: left;
@@ -33,12 +51,12 @@
   			.resizable h3 { text-align: center; margin: 0; font-size: 1.2em; }
 
   			.overbudget .resizable{
-  				background: #ed7070;
+  				//background: #ed7070;
   			}
 
   			.zero .resizable{
   				//background: #b2a0c8;
-  				background: #5cb85c;
+  				//background: #5cb85c;
   			}
 
   			.ui-icon, .ui-widget-content .ui-icon{
@@ -48,15 +66,33 @@
   			.allocation-value{
   				display:block;
   				float:left;
-  				margin-left: 20px;
+  				margin-left: -16px;
+  				background-color: #6E7386;
+  				height: 35px;
+  				width: 35px;
+  				border-radius: 17.5px;
+  				z-index: 2;
+    			position: relative;
+    			text-align: center;
+    			padding-top: 6px;
+    			color: #9EF0EC;
   			}
 
   			.allocation-wrapper{
   				clear: both;
   			}
 
+  			.allocation-name{
+  				font-size: 12px;
+  				padding-left: 20px;
+  				text-transform: uppercase;
+  				color: #6E7386;
+  			}
+
   			#remaining{
-  				font-size: 50px
+  				font-size: 100px;
+  				text-align: center;
+  				display: block;
   			}
 
   			.controls{
@@ -74,11 +110,9 @@
 
 	<body>
 		<section class="wrapper">
-			<h2>Time remaining to budget</h2>
-			<span id="remaining">0</span>
-			<div class="controls">
-				<button type="button" class="btn btn-primary" id="sleep-toggle">Show/Hide Sleep</button>
-				<button type="button" class="btn btn-primary" id="work-toggle">Show/Hide Work</button>
+			<div class="remaining-wrapper">
+				<h2 class="remaining-title">Time remaining to budget</h2>
+				<span id="remaining">0</span>
 			</div>
 
 			<div id="graph-wrapper"></div>
@@ -88,6 +122,11 @@
 				<input type="text" id="add-name" placeholder="activity name"/>
 				<input type="text" id="add-hours" placeholder="# of hours"/>
 				<button type="button" class="btn btn-primary" id="add-item">add it</button>
+			</div>
+
+			<div class="controls">
+				<button type="button" class="btn btn-primary" id="sleep-toggle">Show/Hide Sleep</button>
+				<button type="button" class="btn btn-primary" id="work-toggle">Show/Hide Work</button>
 			</div>
 		</section>
 
