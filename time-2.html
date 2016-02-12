@@ -24,8 +24,10 @@
 
 		<style>
 			.colors{
-				//#6E7386 - light grey
+				//#E3E3E3 - light grey
+				//#6E7386 - mid grey
 				//#585E6C - dark grey
+				//#E8804B - orange
 
 			}
 
@@ -98,11 +100,30 @@
   			.controls{
   				display: block;
   				clear: both;
-  				margin-bottom: 20px;
+  				text-align: center;
+				padding: 20px;
   			}
 
   			.add-new{
   				clear: both;
+  				background: #E3E3E3;
+  				padding: 20px 10px;
+  			}
+
+  			.add-new input{
+  				padding: 5px;
+  				width: 35%;
+  			}
+
+  			.btn.primary{
+  				background: #E8804B;
+  				border-radius: 0;
+  			}
+
+  			.btn.secondary{
+  				background: #E3E3E3;
+  				border-radius: 0;
+  				text-transform: uppercase;
   			}
 
   		</style>
@@ -118,15 +139,14 @@
 			<div id="graph-wrapper"></div>
 
 			<div class="add-new">
-				<h4>Add new activity</h4>
-				<input type="text" id="add-name" placeholder="activity name"/>
-				<input type="text" id="add-hours" placeholder="# of hours"/>
-				<button type="button" class="btn btn-primary" id="add-item">add it</button>
+				<input type="text" id="add-name" placeholder="Add Activity"/>
+				<input type="text" id="add-hours" placeholder="# of Hours"/>
+				<button type="button" class="btn primary" id="add-item">add it</button>
 			</div>
 
 			<div class="controls">
-				<button type="button" class="btn btn-primary" id="sleep-toggle">Show/Hide Sleep</button>
-				<button type="button" class="btn btn-primary" id="work-toggle">Show/Hide Work</button>
+				<button type="button" class="btn secondary" id="sleep-toggle">Show/Hide Sleep</button>
+				<button type="button" class="btn secondary" id="work-toggle">Show/Hide Work</button>
 			</div>
 		</section>
 
