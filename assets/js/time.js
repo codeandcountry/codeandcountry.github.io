@@ -61,7 +61,7 @@
                     style: 'width:' + tool.getBarWidth(k),
                     'data-key': k
                     }))
-            .append($('<div>', {class: 'allocation-value', html: v, 'data-key': k}))
+            .append($('<div>', {class: 'allocation-value ui-resizable-handle ui-resizable-e ui-resizable-w', html: $('<span>', {html: v}), 'data-key': k}))
             
         );
       }
@@ -93,8 +93,8 @@
   tool.initResizable = function(){
     $( ".resizable" ).resizable(
       {
-        handles: 'e, w',
-        grid: [tool.options.barWidthMultiplier, tool.options.barWidthMultiplier]
+        grid: [tool.options.barWidthMultiplier, tool.options.barWidthMultiplier],
+        containment: "parent"
       });
 
     $( ".resizable" ).on( "resize", function( event, ui ) {
