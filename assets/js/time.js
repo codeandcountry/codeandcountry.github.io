@@ -99,8 +99,12 @@
 
     $( ".resizable" ).on( "resize", function( event, ui ) {
       tool.setAllocation($(this).data('key'), ui.size.width);
+    });
+
+    $( ".resizable" ).on( "stop", function( event, ui ) {
       tool.drawBars();
     });
+    
   }
 
   tool.setAllocation = function(k, width){
