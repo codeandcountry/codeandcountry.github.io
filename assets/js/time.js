@@ -99,6 +99,7 @@
 
     $( ".resizable" ).on( "resize", function( event, ui ) {
       tool.setAllocation($(this).data('key'), ui.size.width);
+      tool.drawBars();
     });
   }
 
