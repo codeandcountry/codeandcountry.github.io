@@ -70,6 +70,14 @@
     tool.initResizable();
   }
 
+  tool.resizeBars = function(){
+    $.each(tool.allocations, function(k,v){
+      if( tool.isAllocationVisible(k) ){
+        $("div.resizable[data-key='"+k+"']").width(tool.getBarWidth(k));
+      }
+    });
+  }
+
   tool.getBarWidth = function(allocation){
     return (tool.allocations[allocation] * tool.options.barWidthMultiplier) + 'px';
   }
@@ -86,8 +94,8 @@
         maxAllocation = v > maxAllocation ? v : maxAllocation;
       }
     });
-
     tool.options.barWidthMultiplier = (maxWidth / 2) / maxAllocation;
+    $( ".resizable" ).resizable( "option", "grid", [tool.options.barWidthMultiplier, tool.options.barWidthMultiplier]);
   }
 
   tool.initResizable = function(){
@@ -102,6 +110,11 @@
     $( ".resizable" ).on( "resize", function( event, ui ) {
       tool.setAllocation($(this).data('key'), ui.size.width);
     });    
+    $( ".resizable" ).on( "resizestop", function( event, ui ) {
+      console.log('stop');
+      tool.autoScale();
+      tool.resizeBars();
+    });
   }
 
   tool.setAllocation = function(k, width){

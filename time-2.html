@@ -47,14 +47,23 @@
 				margin-top: 0;
 			}
   			.resizable { 
-  				width: 150px; height: 0px; padding: 17.5px; 
+  				width: 150px; height: 0px; padding: 17.5px 0; 
   				//background: rgba(105, 180, 199, 1);
   				background: #585E6C;
   				color: #fff;
   				margin-bottom: 10px;
   				float: left;
   				position: relative;
+
+  				-webkit-transition: width 1s; /* Safari */
+    			transition: width 1s;
   			}
+
+  			.resizable.ui-resizable-resizing{
+  				-webkit-transition: width 0s;
+  				transition: width 0s;
+  			}
+
   			.resizable h3 { text-align: center; margin: 0; font-size: 1.2em; }
 
   			.overbudget .resizable{
