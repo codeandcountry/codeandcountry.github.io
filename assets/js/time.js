@@ -93,7 +93,7 @@
   tool.initResizable = function(){
     $( ".resizable" ).resizable(
       {
-        handles: 'e, w',
+        handles: 'e',
         grid: [tool.options.barWidthMultiplier, tool.options.barWidthMultiplier],
         containment: "parent",
         minHeight: 35
