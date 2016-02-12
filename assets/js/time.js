@@ -94,7 +94,8 @@
     $( ".resizable" ).resizable(
       {
         grid: [tool.options.barWidthMultiplier, tool.options.barWidthMultiplier],
-        containment: "parent"
+        containment: "parent",
+        minHeight: 35
       });
 
     $( ".resizable" ).on( "resize", function( event, ui ) {
