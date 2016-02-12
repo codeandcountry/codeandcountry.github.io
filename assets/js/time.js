@@ -60,7 +60,9 @@
                     class: 'resizable', 
                     style: 'width:' + tool.getBarWidth(k),
                     'data-key': k,
-                    html: $('<div>', {class: 'allocation-value ui-resizable-handle ui-resizable-e', html: $('<span>', {html: v}), 'data-key': k})
+                    html: $('<div>', {class: 'allocation-handle ui-resizable-handle ui-resizable-e', 
+                                      html: $('<div>', {class:'allocation-value', 
+                                                        html: $('<span>', {html: v}), 'data-key': k})})
                     }))
             
         );
