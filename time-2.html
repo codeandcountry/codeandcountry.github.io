@@ -32,6 +32,7 @@
 				//#6E7386 - mid grey
 				//#585E6C - dark grey
 				//#E8804B - orange
+				//#03C5BC - light blue
 
 			}
 
@@ -167,11 +168,56 @@
 				                                  not supported by any browser */
   			}
 
+  			/* Questions */
+
+  			#budget-view, #question-have-work, #question-work{
+  				display: none;
+  			}
+
+  			#qualifier-view{
+  				background: #03C5BC;
+  				position: absolute;
+  				top:0;
+  				bottom: 0;
+  				left: 0;
+  				right: 0;
+  				text-align: center;
+  			}
+
+  			.question-wrapper{
+  				padding-top: 100px;
+  			}
+
+  			.question-wrapper .question, 
+  			.question-wrapper .answer,
+  			.question-wrapper .next{
+  				display: block;
+  				margin: 0 auto 1em;
+  				clear: both;
+
+  			}
   		</style>
 	</head>
 
 	<body>
-		<section class="wrapper">
+		<section class="wrapper" id="qualifier-view">
+			<div class="question-wrapper" id="question-sleep">
+				<span class="question">How many hours do you sleep per night?</span>
+				<input type="text" class="answer" data-question="sleep"/>
+				<button type="button" class="btn primary next" data-question="sleep">next</button>
+			</div>
+			<div class="question-wrapper" id="question-have-work">
+				<span class="question">Do you work outside the home?</span>
+				<button type="button" class="btn primary yn" data-question="have-work" id="have-work-yes">yes</button>
+				<button type="button" class="btn primary yn" data-question="have-work" id="have-work-no">no</button>
+			</div>
+			<div class="question-wrapper" id="question-work">
+				<span class="question">How many hours per week do you spend at work? Include your commuting time.</span>
+				<input type="text" class="answer" data-question="work"/>
+				<button type="button" class="btn primary next" data-question="work">next</button>
+			</div>
+		</section>
+		<section class="wrapper" id="budget-view">
 			<div class="remaining-wrapper">
 				<h2 class="remaining-title">Time remaining to budget</h2>
 				<span id="remaining">0</span>

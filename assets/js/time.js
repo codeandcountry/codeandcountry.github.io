@@ -13,15 +13,15 @@
   };
 
   tool.defaultAllocations = {
-    sleep: 56,
-    work: 63,
-    housework: 5,
-    meals: 7,
-    'morning routine': 4,
-    kids: 1,
-    spouse: 1,
-    'side business': 1,
-    'social time': 1
+    sleep: 0,
+    work: 0,
+    housework: 1,
+    meals: 1,
+    'morning routine': 0,
+    kids: 0,
+    spouse: 0,
+    'side business': 0,
+    'social time': 0
   }
 
   tool.options = {};
@@ -31,11 +31,13 @@
     console.log('init');
     options = tool.options = tool.loadOptions(options);
     allocations = tool.allocations = tool.loadAllocations(allocations);
+  };
 
+  tool.initBudget = function(){
     tool.autoScale();
     tool.drawBars();
     tool.updateTotal();
-  };
+  }
 
   tool.loadOptions = function(options){
     return $.extend( true, {}, tool.defaultsOptions, options );
@@ -96,8 +98,10 @@
         maxAllocation = v > maxAllocation ? v : maxAllocation;
       }
     });
+    if (maxAllocation < 3) maxAllocation = 3;
     tool.options.barWidthMultiplier = (maxWidth / 2) / maxAllocation;
     $( ".resizable" ).resizable( "option", "grid", [tool.options.barWidthMultiplier, tool.options.barWidthMultiplier]);
+    console.log('bwm='+tool.options.barWidthMultiplier)
   }
 
   tool.initResizable = function(){
@@ -111,6 +115,7 @@
 
     $( ".resizable" ).on( "resize", function( event, ui ) {
       tool.setAllocation($(this).data('key'), ui.size.width);
+      $(this).height(0);
     });    
     $( ".resizable" ).on( "resizestop", function( event, ui ) {
       console.log('stop');
@@ -120,7 +125,10 @@
   }
 
   tool.setAllocation = function(k, width){
+    console.log('setAllocation: '+k+" : "+width);
     var allocation = Math.floor(width / tool.options.barWidthMultiplier);
+    console.log('bwm='+tool.options.barWidthMultiplier);
+    console.log('a='+allocation);
     tool.allocations[k] = allocation;
     $("div.allocation-value[data-key='"+k+"']").html(allocation);
 
@@ -130,7 +138,9 @@
   tool.updateTotal = function(){
     var used = 0;
     $.each(tool.allocations, function(k,v){
+      console.log('used '+k+' = '+ v);
       used = used + v;
+      console.log('used: '+used);
     });
     var remaining = tool.options.hours - used;
     $('#remaining').html(remaining);
@@ -162,11 +172,59 @@
     tool.drawBars();
   }
 
+  tool.saveAnswer = function(question, answer){
+    console.log('save: '+question+" | "+answer)
+    switch(question){
+      case 'sleep':
+        //tool.setAllocation('sleep', answer);
+        tool.allocations['sleep'] = parseInt(answer, 10) * 7;
+        tool.showQuestion('have-work');
+        break;
+      case 'have-work':
+        if(answer === 'yes'){
+          tool.showQuestion('work');  
+        }else{
+          tool.saveAnswer('work', 0);
+        }
+        
+        break;
+      case 'work':
+        tool.allocations['work'] = parseInt(answer, 10);
+        tool.showBudget();
+        tool.initBudget();
+        break;
+    }
+  }
+
+  tool.showQuestion = function(question){
+    $('.question-wrapper').hide();
+    $('#question-'+question).show();
+  }
+
+  tool.showBudget = function(){
+    $('#qualifier-view').hide();
+    $('#budget-view').show();
+  }
+
 }( window.bb = window.bb || {}, jQuery ));
 
 $(document).ready(function(){
     bb.tool.init({}, {showSleep: false, showWork: false, barWidthMultiplier: 50});
     //bb.tool.init();
+
+    $('.question-wrapper .next').on('click', function(){
+      var question = $(this).data('question');
+      var answer = $(this).siblings('.answer').val();
+      bb.tool.saveAnswer(question, answer);
+    });
+
+    $('.question-wrapper #have-work-yes').on('click', function(){
+      bb.tool.saveAnswer('have-work', 'yes');
+    });
+
+    $('.question-wrapper #have-work-no').on('click', function(){
+      bb.tool.saveAnswer('have-work', 'no');
+    });    
 
     $('#work-toggle').on('click', function(){
       bb.tool.showWork(!bb.tool.options.showWork);
