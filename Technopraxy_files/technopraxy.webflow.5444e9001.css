@@ -2077,7 +2077,7 @@ textarea.w-input, textarea.w-select {
 
 @media screen and (max-width: 767px) {
   .w-layout-blockcontainer {
-    max-width: none;
+    max-width: 90%;
   }
 }
 
